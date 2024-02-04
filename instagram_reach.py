@@ -10,7 +10,7 @@ from sklearn.impute import SimpleImputer
 
 # Load the dataset
 # Replace 'your_dataset.csv' with the actual file name
-data = pd.read_csv('your_dataset.csv')
+data = pd.read_csv('instagram_reach.csv')
 
 # Split the data into features and target variables
 X = data[['Username', 'Caption', 'Hashtag', 'Followers', 'Time_Since_Posted']]
