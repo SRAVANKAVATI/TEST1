@@ -1,0 +1,379 @@
+﻿PYTHON
+1.
+ the matrix is sorted and has the described properties, we can perform a binary search to efficiently find the target value. 
+Code:
+def searchMatrix(matrix, target):
+    if not matrix or not matrix[0]:
+        return False
+    
+    rows, cols = len(matrix), len(matrix[0])
+    left, right = 0, rows * cols - 1
+    
+    while left <= right:
+        mid = (left + right) // 2
+        mid_value = matrix[mid // cols][mid % cols]
+        
+        if mid_value == target:
+            return True
+        elif mid_value < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return False
+
+
+Example
+matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]]
+target = 3
+result = searchMatrix(matrix, target)
+print(result)  
+ Output: True
+
+
+
+
+2.
+
+
+Python program that takes a string as input, counts the frequency of each word, and returns the length of the highest-frequency word:
+
+
+from collections import Counter
+
+
+def highest_frequency_word_length(s):
+    words = s.split()
+    word_count = Counter(words)
+    
+    max_frequency = max(word_count.values())
+    most_frequent_words = [word for word, count in word_count.items() if count == max_frequency]
+    
+    if most_frequent_words:
+        highest_frequency_word = most_frequent_words[0]
+        return len(highest_frequency_word)
+    else:
+        return 0
+
+
+ Example
+input_string = "write write write all the number from from from 1 to 100"
+output = highest_frequency_word_length(input_string)
+print(output)  
+ Output: 5
+
+
+
+
+ Example2
+  input_string_2 = "programming is fun coding is coding"
+output_2 = highest_frequency_word_length(input_string_2)
+print(output_2) 
+  Output: 6
+
+
+          
+
+
+                       Machine learning
+
+
+QUESTION 2
+
+
+Implementing machine learning (ML) in a real-world application involves several steps and considerations. Here is a general guideline:
+
+
+Define the Problem:
+Clearly define the problem you want to solve using machine learning.
+Understand the business requirements and goals.
+
+
+Collect and Prepare Data:
+Gather relevant data for training and testing the model.
+Clean and preprocess the data, handle missing values, and convert it into a suitable format for training.
+
+
+Exploratory Data Analysis (EDA):
+Analyze the data to gain insights and identify patterns.
+Visualize the data to understand its distribution and relationships.
+
+
+Feature Engineering:
+Select relevant features that contribute to the problem.
+Create new features if needed.
+Transform and normalize features as necessary.
+
+
+Choose a Model:
+Select a machine learning algorithm based on the nature of the problem (classification, regression, clustering, etc.).
+Consider the model's complexity and how well it fits the data.
+
+
+Split Data:
+Split the data into training and testing sets to evaluate the model's performance.
+Optionally, use cross-validation for more robust evaluation
+.
+Train the Model:
+Train the chosen model using the training dataset.
+Tune hyperparameters to optimize the model's performance.
+
+
+Evaluate the Model:
+Use the testing set to evaluate the model's performance using appropriate metrics (accuracy, precision, recall, F1 score, etc.).
+Analyze the model's strengths and weaknesses.
+
+
+Iterate and Improve:
+Based on the evaluation results, iterate on the model or try different algorithms.
+Consider collecting more data if necessary.
+Fine-tune hyperparameters for better performance.
+
+
+Deploy the Model:
+Once satisfied with the model's performance, deploy it to a production environment.
+Implement the model into the application's workflow
+.
+Monitor and Maintain:
+Continuously monitor the model's performance in the real-world environment.
+Implement mechanisms for retraining if the model's performance degrades over time.
+Keep the model up-to-date with new data and changes in the application's requirements.
+
+
+Ethical Considerations:
+Consider ethical implications, fairness, and transparency in the use of machine learning.
+Address potential biases in the data and model.
+
+
+Scale Up:
+If the application requires handling a larger scale of data or traffic, consider scalability aspects.
+Optimize the model and infrastructure for performance.
+
+
+Documentation:
+Document the entire process, including data preprocessing, model selection, training, and deployment.
+Provide clear documentation for future maintenance and updates.
+ the success of a machine learning application depends on a combination of good problem definition, high-quality data, suitable algorithms, and continuous monitoring and improvement
+
+
+SVM REGRESSOR  IMPLEMENTATION:
+IMPORT LIBRARIES
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVR
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+
+
+EXPLORE DATA:
+
+
+data = pd.read_csv('Bengaluru House Prediction’')
+
+
+
+
+print(data.head())
+
+
+print(data.describe())
+
+
+# Check for missing values
+print(data.isnull().sum())
+
+
+
+
+EDA:
+sns.histplot(data['target_variable'], bins=30, kde=True)
+plt.title('Distribution of Target Variable')
+plt.show()
+
+
+sns.pairplot(data, x_vars=['feature1', 'feature2', ...], y_vars='target_variable', kind='scatter')
+plt.show()
+
+
+
+
+FEATURE ENGINEERING:
+# Handle missing values if necessary
+# data = data.fillna(value)
+
+
+# Create new features if relevant
+# data['new_feature'] = ...
+
+
+# Encode categorical variables if needed
+# data = pd.get_dummies(data, columns=['categorical_feature'])
+
+
+# Split the data into features (X) and target variable (y)
+X = data.drop('target_variable', axis=1)
+y = data['target_variable']
+
+
+TRAIN-TEST SPLIT:
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+FEATURE SCALING:
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+
+SVM REGRESSOR TRAINING:
+svm_regressor = SVR(kernel='linear', C=1.0)  # Choose appropriate hyperparameters
+svm_regressor.fit(X_train_scaled, y_train)
+
+
+EVALUATE THE MODEL:
+# Predict on the test set
+y_pred = svm_regressor.predict(X_test_scaled)
+
+
+# Evaluate performance using mean squared error
+mse = mean_squared_error(y_test, y_pred)
+print(f'Mean Squared Error: {mse}')
+
+
+# Visualize predictions vs actual values
+plt.scatter(y_test, y_pred)
+plt.xlabel('Actual Values')
+plt.ylabel('Predicted Values')
+plt.title('Actual vs Predicted Values')
+plt.show()
+
+
+HYPERPARAMETER TUNING:
+We need to experiment with different kernel functions (linear, rbf, etc.) and hyperparameters (such as C) to optimize the model's performance.
+
+
+
+
+
+
+
+
+
+
+
+
+QUESTION 1
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+from sklearn.preprocessing import StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+
+
+# Load the dataset
+# Replace 'your_dataset.csv' with the actual file name
+data = pd.read_csv('instagram_reach.csv')
+
+
+# Split the data into features and target variables
+X = data[['Username', 'Caption', 'Hashtag', 'Followers', 'Time_Since_Posted']]
+y_likes = data['Likes']
+y_time_since_posted = data['Time_Since_Posted']
+
+
+# Split the data into training and testing sets
+X_train, X_test, y_likes_train, y_likes_test, y_time_train, y_time_test = train_test_split(
+    X, y_likes, y_time_since_posted, test_size=0.2, random_state=42
+)
+
+
+# Preprocessing for numerical features
+numeric_features = ['Followers']
+numeric_transformer = Pipeline(steps=[
+    ('imputer', SimpleImputer(strategy='mean')),
+    ('scaler', StandardScaler())
+])
+
+
+# Preprocessing for text features
+text_features = ['Username', 'Caption', 'Hashtag']
+text_transformer = Pipeline(steps=[
+    ('imputer', SimpleImputer(strategy='constant', fill_value='')),
+    ('vectorizer', CountVectorizer())
+])
+
+
+# Bundle preprocessing for numerical and text features
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numeric_transformer, numeric_features),
+        ('text', text_transformer, text_features)
+    ]
+)
+
+
+# Define the model for predicting the number of likes
+model_likes = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('regressor', LinearRegression())
+])
+
+
+# Define the model for predicting time since posted
+model_time_since_posted = Pipeline(steps=[
+    ('preprocessor', preprocessor),
+    ('regressor', LinearRegression())
+])
+
+
+# Train the models
+model_likes.fit(X_train, y_likes_train)
+model_time_since_posted.fit(X_train, y_time_train)
+
+
+# Make predictions
+likes_predictions = model_likes.predict(X_test)
+time_predictions = model_time_since_posted.predict(X_test)
+
+
+# Evaluate the models
+likes_rmse = mean_squared_error(y_likes_test, likes_predictions, squared=False)
+time_rmse = mean_squared_error(y_time_test, time_predictions, squared=False)
+
+
+print(f'Root Mean Squared Error (Likes): {likes_rmse}')
+print(f'Root Mean Squared Error (Time Since Posted): {time_rmse}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
